@@ -1,0 +1,26 @@
+# .gitignore - Ignored files and directories
+
+# Environment variables
+.env
+
+# Temporary and cache files
+__pycache__/
+*.py[cod]
+*$py.class
+.cache
+.pytest_cache/
+
+# Pytest
+.cache
+.pytest_cache/
+
+# macOS specific
+.DS_Store
+
+# Logs and databases
+*.log
+*.sqlite
+
+# Other files and folders to ignore
+# node_modules/
+# dist/
