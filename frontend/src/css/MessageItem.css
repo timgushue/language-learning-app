@@ -1,0 +1,30 @@
+/* MessageItem.css */
+.message {
+  display: flex;
+  align-items: center;
+  padding: 10px 20px;
+  margin: 5px;
+  border-radius: 15px;
+  max-width: 80%;
+  word-wrap: break-word;
+}
+
+.message.user {
+  justify-content: flex-end;
+  background-color: #dcf8c6;
+}
+
+.message.user strong {
+  margin-right: 10px;
+  color: #2a6628;
+}
+
+.message.gpt {
+  justify-content: flex-start;
+  background-color: #e5e5ea;
+}
+
+.message.gpt strong {
+  margin-right: 10px;
+  color: #3b3b3b;
+}

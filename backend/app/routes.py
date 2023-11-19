@@ -1,6 +1,10 @@
-import os
-import openai
+""" Proxy API for openAI calls"""
+from dotenv import load_dotenv
+from openai import OpenAI
 from flask import Flask, request, jsonify
+
+
+load_dotenv()
 
 def create_app(test_config=None):
     app = Flask(__name__, instance_relative_config=True)
@@ -24,12 +28,10 @@ def create_app(test_config=None):
         return jsonify({"response": response})
 
     def call_openai_chat(user_messages):
-        openai_api_key = os.environ.get('OPENAI_API_KEY')
-        openai.api_key = openai_api_key
-
         try:
-            response = openai.ChatCompletion.create(
-                model="gpt-4",
+            client = OpenAI()
+            response = client.chat.completions.create(
+                model="gpt-3.5-turbo-1106",
                 response_format={ "type": "json_object" },
                 messages=user_messages
             )
