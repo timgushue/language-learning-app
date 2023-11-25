@@ -46,8 +46,6 @@ Before you begin, ensure you have the following installed:
 After setting up the project, you can run the application locally. Depending on the framework and the setup, the command may vary. For example, if you're using Flask:
 
 ```bash
-export FLASK_APP=app
-export FLASK_ENV=development
 flask run
 ```
 

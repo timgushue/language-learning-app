@@ -1,7 +1,9 @@
 """ Proxy API for openAI calls"""
 from dotenv import load_dotenv
 from openai import OpenAI
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, Response
+import os
+from datetime import datetime
 
 
 load_dotenv()
@@ -39,5 +41,36 @@ def create_app(test_config=None):
         except Exception as e:
             # Handle exceptions (e.g., API errors, network issues)
             return str(e)
+        
+    @app.route('/tts', methods=['POST'])
+    def tts():
+        data = request.json
+        text = data['text']
+
+        client = OpenAI()
+
+        try:
+            # Create a filename with a timestamp
+            timestamp = datetime.now().strftime("%Y%m%d%H%M%S")
+            speech_file_path = os.path.join(os.path.dirname(__file__), f"speech_{timestamp}.mp3")
+
+            response = client.audio.speech.create(
+                model="tts-1",
+                voice="fable",
+                input=text
+            )
+            response.stream_to_file(speech_file_path)
+
+            def generate():
+                with open(speech_file_path, "rb") as f:
+                    while chunk := f.read(4096):
+                        yield chunk
+
+            return Response(generate(), mimetype="audio/mpeg")
+        
+        except Exception as e:
+            # Handle exceptions here
+            return jsonify({"error": "An error occurred: " + str(e)}), 500
+
 
     return app
