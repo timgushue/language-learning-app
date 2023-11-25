@@ -67,3 +67,6 @@ jspm_packages/
 # parcel-bundler cache (https://parceljs.org/)
 .cache
 .parcel-cache
+
+# any conversation files
+.mp3
