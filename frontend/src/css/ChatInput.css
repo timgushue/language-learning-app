@@ -1,25 +1,46 @@
 /* ChatInput.css */
-.user-input {
-  display: flex;
-  justify-content: space-between;
+
+.chat-container {
+  /* Add padding around the chat container if needed */
   padding: 10px;
-  border-top: 1px solid #ddd;
 }
 
-.user-input textarea {
+.input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  border-radius: 20px;
+  border: 1px solid #ccc;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+  background-color: #fff; /* Match background to the button */
+  overflow: hidden; /* Ensures the inner elements do not overflow the rounded border */
+  padding: 10px
+}
+
+.user-input {
   flex-grow: 1;
   padding: 10px;
-  border: 2px solid #ddd;
-  border-radius: 15px;
-  margin-right: 10px;
+  border: none;
+  outline: none;
+  margin: 0;
+  border-radius: 10px 10px 10px 10px;
   resize: none;
+  font-size: 14px;
 }
 
-.user-input button {
-  background-color: #007bff;
-  color: #fff;
+.send-button {
   border: none;
-  border-radius: 15px;
-  padding: 10px 20px;
+  background: #000;
+  color: #fff;
+  padding: 8px 10px;
+  border-radius: 8px 8px 8px 8px;
   cursor: pointer;
+  /* Remove margin if it's not needed */
 }
+
+/* .microphone-icon {
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+} */

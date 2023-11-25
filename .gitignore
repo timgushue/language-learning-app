@@ -1,5 +1,8 @@
 # .gitignore - Ignored files and directories
 
+# IDE
+.vscode
+
 # Environment variables
 .env
 

@@ -28,3 +28,26 @@
   margin-right: 10px;
   color: #3b3b3b;
 }
+
+.avatar {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.message-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-grow: 1;
+}
+
+.play-button {
+  background-color: #fff; /* White background */
+  color: #888; /* Grey icon */
+  border: 1px solid #ccc; /* Optional: add a border to the button */
+  padding: 5px;
+  border-radius: 10px 10px 10px 10px;
+  cursor: pointer;
+}

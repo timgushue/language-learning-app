@@ -3,6 +3,10 @@ import '../css/ChatInterface.css';
 import ChatHeader from './ChatHeader';
 import MessageList from './MessageList';
 import ChatInput from './ChatInput';
+import { GermanPrompt } from './prompts';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faArrowUp } from '@fortawesome/free-solid-svg-icons';
+
 
 const ChatInterface = () => {
   const [messages, setMessages] = useState([]);
@@ -30,8 +34,8 @@ const ChatInterface = () => {
     // Prepare the payload with the 'messages' key
     const payload = {
       messages: [
-        // If you have a static message you always send, like the 'system' one below, include it
-        { role: 'system', content: 'You are a helpful assistant designed to output JSON.' },
+        {"role": "system", "content": "You are a helpful assistant designed to output JSON."},
+        { "role": "system", "content": GermanPrompt },
         userMessage
       ]
     };
@@ -52,7 +56,7 @@ const ChatInterface = () => {
   
       const gptResponse = {
         role: 'gpt',
-        content: parsedResponse.joke, // Replace 'joke' with the appropriate key if needed
+        content: parsedResponse.response, // Replace 'joke' with the appropriate key if needed
         name: 'ChatGPT' // Name for the GPT responses
       };
   
@@ -66,18 +70,54 @@ const ChatInterface = () => {
   
     // Clear the user input field
     setUserInput('');
-  };  
+  };
 
+  const handlePlay = async (text) => {
+    try {
+      const response = await fetch('http://127.0.0.1:5000/tts', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ text })
+      });
+  
+      if (response.ok) {
+        const blob = await response.blob();
+        const audioUrl = URL.createObjectURL(blob);
+        const audio = new Audio(audioUrl);
+        audio.play();
+  
+        // Clean up when the audio has finished playing
+        audio.onended = () => {
+          URL.revokeObjectURL(audioUrl);
+        };
+      } else {
+        console.error('Failed to fetch TTS audio');
+        // Handle non-OK responses
+      }
+    } catch (error) {
+      console.error("Error playing text-to-speech: ", error);
+      // Handle the error appropriately in your UI
+    }
+  };
+  
   return (
     <div className="chat-container">
       <ChatHeader />
-      <MessageList messages={messages} messagesEndRef={messagesEndRef} />
+      <MessageList messages={messages} onPlay={handlePlay} messagesEndRef={messagesEndRef} />
       {/* No need for a separate div for ref, it should be inside MessageList */}
-      <ChatInput 
-        userInput={userInput} 
-        setUserInput={setUserInput} 
-        sendMessage={sendMessage} 
-      />
+      <div className="input-wrapper">
+        <textarea
+          className="user-input"
+          placeholder="Type your message..."
+          value={userInput}
+          onChange={(e) => setUserInput(e.target.value)}
+        />
+        <button className="send-button" onClick={sendMessage}>
+          <FontAwesomeIcon icon={faArrowUp} />
+        </button>
+      </div>
     </div>
   );
 };
